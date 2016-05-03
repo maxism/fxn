@@ -1,0 +1,20 @@
+{
+  "name": "fxn",
+  "version": "0.0.1",
+  "description": "Stateless Architecture",
+  "main": "core/module.js",
+  "scripts": {
+    "test": "mocha ./test/runner.js",
+    "docs": "documentation core/module.js -o docs -f html"
+  },
+  "author": "Keith Horwood",
+  "license": "MIT",
+  "dependencies": {
+    "async": "^2.0.0-rc.3",
+    "dotenv": "^2.0.0"
+  },
+  "devDependencies": {
+    "chai": "~3.5.0",
+    "mocha": "~2.4.5"
+  }
+}
