@@ -1,6 +1,6 @@
 {
   "name": "fxn",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Stateless Architecture",
   "main": "core/module.js",
   "scripts": {

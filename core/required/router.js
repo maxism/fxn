@@ -97,7 +97,14 @@ module.exports = (() => {
     parseBody(body, headers) {
 
       let contentType = headers['content-type'];
-      contentType = (typeof contentType === 'string') ? contentType.split(';')[0] : '';
+      let contentData = (contentType || '').split(';').map(c => c.replace(/^\s*(.*)\s*$/, '$1'));
+
+      contentType = contentData[0] || '';
+      contentData = contentData.slice(1).reduce((data, content) => {
+        content = content.split('=');
+        content && (data[content[0]] = content[1]);
+        return data;
+      }, {});
 
       let fn = {
         'application/x-www-form-urlencoded': (body) => {
@@ -110,6 +117,86 @@ module.exports = (() => {
             console.log('Failed to parse JSON Body');
             return {};
           }
+        },
+        'multipart/form-data': body => {
+
+          let data = {};
+          body = body.toString('binary');
+
+          let delim = contentData.boundary;
+          let newLine = body.indexOf(delim + '\r\n') > -1 ? '\r\n' : '\n';
+
+          let items = body.split(delim);
+
+          // Eliminate top of array (empty).
+          items.shift();
+
+          return items
+            .map(item => {
+              item = item.split(newLine);
+              item.shift();
+              item.pop();
+              return item;
+            })
+            .filter(item => item.length)
+            .reduce((data, item) => {
+
+              let contentDisposition;
+              let contentType;
+
+              if (item[0].match(/^content\-disposition/i)) {
+                contentDisposition = item.shift().replace(/^\s*(.*)\s*$/, '$1');
+              }
+
+              if (item[0].match(/^content\-type/i)) {
+                contentType = item.shift().replace(/^\s*(.*)\s*$/, '$1');
+              }
+
+              // Remove blank line...
+              item.shift();
+
+              let content = item.join(newLine);
+
+              contentType = contentType && contentType.split(';')[0];
+              contentType = contentType && contentType.split(':')[1].replace(/^\s*(.*)\s*$/, '$1');
+
+              if (!contentDisposition) {
+                throw new Error('Malformed Form Data');
+              }
+
+              let meta = contentDisposition.split(';')
+                .slice(1)
+                .reduce((meta, v) => {
+
+                  v = v.replace(/^\s*(.*)\s*$/, '$1').split('=');
+                  let name = v[0];
+                  let value = '';
+                  try {
+                    value = JSON.parse(v[1]);
+                  } catch(e) {
+                    value = '';
+                  }
+
+                  meta[name] = value;
+                  return meta;
+
+                }, {});
+
+              if (meta.name) {
+                if (!contentType) {
+                  data[meta.name] = content;
+                } else {
+                  let buffer = new Buffer(content, 'binary');
+                  buffer.contentType = contentType;
+                  Object.keys(meta).forEach(key => buffer[key] = meta[key]);
+                  data[meta.name] = buffer;
+                }
+              }
+
+              return data;
+
+            }, {});
+
         }
       }[contentType];
 

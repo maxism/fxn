@@ -13,6 +13,8 @@ module.exports = (function() {
     Router: './required/router.js',
     Scheduler: './required/scheduler.js',
     StrongParam: './required/strong_param.js',
+    Test: './mocha/test.js',
+    TestRunner: './mocha/test_runner.js',
     utilities: './required/utilities.js'
   };
 

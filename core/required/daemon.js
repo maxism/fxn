@@ -48,12 +48,15 @@ module.exports = (() => {
       if ((process.env.NODE_ENV || 'development') === 'development') {
 
         this.watch('', (changes) => {
+
           changes.forEach(change => {
             console.log(`[${this.name}.Daemon] ${change.event[0].toUpperCase()}${change.event.substr(1)}: ${change.path}`);
           });
+
           this.children.forEach(child => child.send({invalidate: true}));
           this.children = [];
           !this.children.length && this.unwatch() && this.start();
+
         });
 
       }
