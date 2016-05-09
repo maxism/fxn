@@ -10,7 +10,7 @@ module.exports = (() => {
 
     constructor(name) {
 
-      this.name = 'fxn' || name;
+      this.name = name || 'fxn';
 
       this.server = http.createServer(this.handler.bind(this));
       this.router = require(`${process.cwd()}/app/router.js`);

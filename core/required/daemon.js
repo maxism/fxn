@@ -15,7 +15,7 @@ module.exports = (() => {
 
     constructor(name) {
 
-      this.name = 'fxn' || name;
+      this.name = name || 'fxn';
 
       this._watchers = null;
 
