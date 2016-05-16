@@ -77,7 +77,11 @@ Stops all associated SchedulerEntry objects for the Scheduler
 
 Construct a new fxn.WeeklyEntry. All arguments passed represent the times to execute.
 
-# \_parseHeaderKey
+# Controller
+
+Controller for handling HTTP requests
+
+## \_parseHeaderKey
 
 Uppercase all words in header key.
 
@@ -87,11 +91,11 @@ Uppercase all words in header key.
 
 Returns **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
 
-# after
+## after
 
 Intended to be overwritten when inherited. Run after renderware.
 
-# allowOrigin
+## allowOrigin
 
 Specifies CORS (cross origin resource sharing) headers.
 
@@ -101,7 +105,7 @@ Specifies CORS (cross origin resource sharing) headers.
 
 Returns **this** 
 
-# appendHeader
+## appendHeader
 
 Add a value to a existing specific response header. If header not exists create it.
 
@@ -110,20 +114,20 @@ Add a value to a existing specific response header. If header not exists create 
 -   `key` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
 -   `value` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
 
-# before
+## before
 
 Intended to be overwritten when inherited. Run before middleware.
   Controller-specific middleware and renderware here
 
-# del
+## del
 
 Method called when a route is hit with a DELETE request, if not first intercepted by custom Controller#destroy method. Intended to be overwritten when inherited.
 
-# get
+## get
 
 Method called when a route is hit with a GET request, if not first intercepted by custom Controller#index or Controller#show methods. Intended to be overwritten when inherited.
 
-# getHeader
+## getHeader
 
 Get the value of a specific response header
 
@@ -132,25 +136,25 @@ Get the value of a specific response header
 -   `key` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
 -   `value` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** Default value returned if not found
 
-# getStatus
+## getStatus
 
 The current HTTP status code expected to be used by the outgoing http.ServerResponse
 
 Returns **[number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
 
-# options
+## options
 
 Method called when a route is hit with an OPTIONS request. Typically unused, exists for CORS purposes.
 
-# post
+## post
 
 Method called when a route is hit with a POST request, if not first intercepted by custom Controller#create method. Intended to be overwritten when inherited.
 
-# put
+## put
 
 Method called when a route is hit with a PUT request, if not first intercepted by custom Controller#update method. Intended to be overwritten when inherited.
 
-# redirect
+## redirect
 
 Creates a 302 redirect to the desired location
 
@@ -158,7 +162,7 @@ Creates a 302 redirect to the desired location
 
 -   `location` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
 
-# render
+## render
 
 Render an HTTP response (end ServerResponse) based on provided data
 
@@ -166,7 +170,7 @@ Render an HTTP response (end ServerResponse) based on provided data
 
 -   `data` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** Can be Buffer, String, or Plain Object
 
-# securityPolicy
+## securityPolicy
 
 Add Content-Security-Policy headers
 
@@ -175,7 +179,7 @@ Add Content-Security-Policy headers
 -   `directive` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** The directive of the security policy
 -   `src` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** The value (domain) to add to the policy
 
-# setHeader
+## setHeader
 
 Set a specific response header
 
@@ -184,7 +188,7 @@ Set a specific response header
 -   `key` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
 -   `value` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
 
-# setHeaders
+## setHeaders
 
 Set HTTP headers to be used by the outgoing http.ServerResponse
 
@@ -194,7 +198,7 @@ Set HTTP headers to be used by the outgoing http.ServerResponse
 
 Returns **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** The headers object created
 
-# status
+## status
 
 Set HTTP status code for this response
 
@@ -202,37 +206,64 @@ Set HTTP status code for this response
 
 -   `code` **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
 
-# StrongParam
+# Application
 
-Used to filter parameters from HTTP query string or body data
+Single HTTP Application. Logging and response functionality.
 
-## constructor
+## error
 
-**Parameters**
-
--   `object` **props** Properties
--   `props`  
-
-# HourlyEntry
-
-**Extends SchedulerEntry**
-
-SchedulerEntry extension for hourly (on the minute) execution
-
-## constructor
+HTTP Error
 
 **Parameters**
 
--   `scheduler` **fxn.Scheduler** the scheduler the entry belongs to
--   `times` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)** The times (in minutes) to execute the task
+-   `req`  
+-   `res`  
+-   `start`  
+-   `status`  
+-   `message`  
+-   `err`  
 
-## getDateOffset
+## handler
 
-Sets the offset to the nearest hour
+HTTP Request Handler
 
 **Parameters**
 
--   `cur` **[Date](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date)** The current Date
+-   `req` **http.ClientRequest** 
+-   `res` **http.ServerResponse** 
+
+## listen
+
+Listens for incoming connections on a provided port
+
+**Parameters**
+
+-   `port` **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
+
+## logResponse
+
+Logs a server response in the console
+
+**Parameters**
+
+-   `statusCode` **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** HTTP Status Code
+-   `url` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** The url that was hit
+-   `t` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** The time to execute the request
+-   `str`  
+
+## send
+
+Ends the HTTP Response
+
+**Parameters**
+
+-   `req`  
+-   `res`  
+-   `start`  
+-   `status`  
+-   `headers`  
+-   `data`  
+-   `log`  
 
 # WeeklyEntry
 
@@ -255,22 +286,22 @@ Sets the offset to the nearest week
 
 -   `cur` **[Date](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date)** The current Date
 
-# DailyEntry
+# HourlyEntry
 
 **Extends SchedulerEntry**
 
-SchedulerEntry extension for daily (on the hour) execution
+SchedulerEntry extension for hourly (on the minute) execution
 
 ## constructor
 
 **Parameters**
 
 -   `scheduler` **fxn.Scheduler** the scheduler the entry belongs to
--   `times` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)** The times (in hours) to execute the task
+-   `times` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)** The times (in minutes) to execute the task
 
 ## getDateOffset
 
-Sets the offset to the nearest day
+Sets the offset to the nearest hour
 
 **Parameters**
 
@@ -292,6 +323,38 @@ SchedulerEntry extension for minutely (on the second) execution
 ## getDateOffset
 
 Sets the offset to the nearest minute
+
+**Parameters**
+
+-   `cur` **[Date](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date)** The current Date
+
+# StrongParam
+
+Used to filter parameters from HTTP query string or body data
+
+## constructor
+
+**Parameters**
+
+-   `object` **props** Properties
+-   `props`  
+
+# DailyEntry
+
+**Extends SchedulerEntry**
+
+SchedulerEntry extension for daily (on the hour) execution
+
+## constructor
+
+**Parameters**
+
+-   `scheduler` **fxn.Scheduler** the scheduler the entry belongs to
+-   `times` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)** The times (in hours) to execute the task
+
+## getDateOffset
+
+Sets the offset to the nearest day
 
 **Parameters**
 
@@ -354,61 +417,6 @@ Creates a new MockRequest object (emulates an HTTP request)
 -   `query` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** The query parameters you wish to pass
 
 Returns **fxn.EndpointRequest** 
-
-# error
-
-HTTP Error
-
-**Parameters**
-
--   `req`  
--   `res`  
--   `start`  
--   `status`  
--   `message`  
--   `err`  
-
-# handler
-
-HTTP Request Handler
-
-**Parameters**
-
--   `req` **http.ClientRequest** 
--   `res` **http.ServerResponse** 
-
-# listen
-
-Listens for incoming connections on a provided port
-
-**Parameters**
-
--   `port` **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
-
-# logResponse
-
-Logs a server response in the console
-
-**Parameters**
-
--   `statusCode` **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** HTTP Status Code
--   `url` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** The url that was hit
--   `t` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** The time to execute the request
--   `str`  
-
-# send
-
-Ends the HTTP Response
-
-**Parameters**
-
--   `req`  
--   `res`  
--   `start`  
--   `status`  
--   `headers`  
--   `data`  
--   `log`  
 
 # ExecutionQueue
 

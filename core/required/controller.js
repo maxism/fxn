@@ -4,6 +4,10 @@ module.exports = (() => {
 
   const ExecutionQueue = require('./execution_queue.js');
 
+  /**
+  * Controller for handling HTTP requests
+  * @class
+  */
   class Controller {
 
     constructor(path, method, requestHeaders, params, responder) {

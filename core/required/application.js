@@ -6,6 +6,10 @@ module.exports = (() => {
   const url = require('url');
   const utilities = require('./utilities.js');
 
+  /**
+  * Single HTTP Application. Logging and response functionality.
+  * @class
+  */
   class Application {
 
     constructor(name) {
