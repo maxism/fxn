@@ -6,4 +6,4 @@
 fxn is the base Routing and Controller layer for
 [Nodal](http://github.com/keithwhor/nodal) and related projects.
 
-Documentation is available at [DOCS.md](docs.md)
+Documentation is available at [DOCS.md](DOCS.md)
