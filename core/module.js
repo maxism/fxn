@@ -19,7 +19,11 @@ module.exports = (function() {
   };
 
   let Load = {};
-  let Module = {};
+
+  let Module = {
+    require: path => require(`${process.cwd()}/${path}`),
+    mime: require('mime-types')
+  };
 
   Object.defineProperties(
     Module,

@@ -236,7 +236,7 @@ module.exports = (() => {
         }
 
         this.getHeader('Content-Type') || this.setHeader('Content-Type', 'text/html');
-        this.setHeader('X-Powered-By', 'fxn');
+        this.getHeader('X-Powered-By') || this.setHeader('X-Powered-By', 'fxn');
         this._responder(null, this._status, this._headers, data);
         this.after();
 
