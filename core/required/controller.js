@@ -66,6 +66,14 @@ module.exports = (() => {
     }
 
     /**
+    * Default "501 - Not Implemented" response
+    */
+    notImplemented() {
+      this.status(501);
+      this.render('Not Implemented');
+    }
+
+    /**
     * Intended to be overwritten when inherited. Run before middleware.
     *   Controller-specific middleware and renderware here
     */
