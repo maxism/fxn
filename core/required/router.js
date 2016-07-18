@@ -184,7 +184,8 @@ module.exports = (() => {
 
               if (meta.name) {
                 if (!contentType) {
-                  data[meta.name] = content;
+                  let buffer = new Buffer(content, 'binary');
+                  data[meta.name] = buffer.toString();
                 } else {
                   let buffer = new Buffer(content, 'binary');
                   buffer.contentType = contentType;
