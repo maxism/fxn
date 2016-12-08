@@ -164,10 +164,11 @@ module.exports = (() => {
                 throw new Error('Malformed Form Data');
               }
 
+              contentDisposition = new Buffer(contentDisposition, 'binary').toString('utf8')
+
               let meta = contentDisposition.split(';')
                 .slice(1)
                 .reduce((meta, v) => {
-
                   v = v.replace(/^\s*(.*)\s*$/, '$1').split('=');
                   let name = v[0];
                   let value = '';
