@@ -13,7 +13,7 @@ module.exports = (() => {
   */
   class Daemon {
 
-    constructor(name) {
+    constructor(name, cpus) {
 
       this.name = name || 'fxn';
 
@@ -23,7 +23,7 @@ module.exports = (() => {
       this._server = null;
       this._port = null;
 
-      this.cpus = os.cpus().length;
+      this.cpus = parseInt(cpus) || os.cpus().length;
       this.children = [];
 
       process.on('exit', (code) => {
