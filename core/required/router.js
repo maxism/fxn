@@ -188,7 +188,13 @@ module.exports = (() => {
                   let buffer = new Buffer(content, 'binary');
                   data[meta.name] = buffer.toString();
                 } else {
-                  let buffer = new Buffer(content, 'binary');
+                  let encoding = 'binary'
+
+                  if (headers['content-transfer-encoding'] === 'base64') {
+                    encoding = 'base64'
+                  }
+
+                  let buffer = new Buffer(content, encoding)
                   buffer.contentType = contentType;
                   Object.keys(meta).forEach(key => buffer[key] = meta[key]);
                   data[meta.name] = buffer;
