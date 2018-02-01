@@ -258,6 +258,9 @@ module.exports = (() => {
         if (parts.length === 2 && /^Bearer$/i.test(parts[0])) {
             auth.token_type = 'bearer';
             auth.access_token = parts[1];
+        } else {
+            auth.token_type = parts[0];
+            auth.access_token = parts[1];
         }
       } else if (params.access_token) {
         auth.token_type = 'bearer';
