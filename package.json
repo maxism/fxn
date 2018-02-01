@@ -10,8 +10,8 @@
   "author": "Keith Horwood",
   "license": "MIT",
   "dependencies": {
-    "async": "^2.0.0-rc.3",
-    "dotenv": "^2.0.0",
+    "async": "^2.6.0",
+    "dotenv": "^5.0.0",
     "mime-types": "~2.1.9"
   },
   "devDependencies": {
