@@ -161,7 +161,8 @@ module.exports = (() => {
               contentType = contentType && contentType.split(':')[1].replace(/^\s*(.*)\s*$/, '$1');
 
               if (!contentDisposition) {
-                throw new Error('Malformed Form Data');
+                // Malformed body, so return nothing
+                return {};
               }
 
               let meta = contentDisposition.split(';')
