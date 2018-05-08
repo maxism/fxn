@@ -136,7 +136,7 @@ module.exports = fxn => {
 
     });
 
-    it('should turn non-objects into empty objects', () => {
+    it('should turn non-object arguments to constructor into empty objects', () => {
 
       let nullParam = new fxn.StrongParam(null);
       let infinityParam = new fxn.StrongParam(Infinity);
