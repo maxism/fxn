@@ -136,6 +136,20 @@ module.exports = fxn => {
 
     });
 
+    it('should turn non-object arguments to constructor into empty objects', () => {
+
+      let nullParam = new fxn.StrongParam(null);
+      let infinityParam = new fxn.StrongParam(Infinity);
+      let stringParam = new fxn.StrongParam('test');
+      let numberParam = new fxn.StrongParam(42);
+
+      expect(Object.keys(nullParam).length).to.equal(0);
+      expect(Object.keys(infinityParam).length).to.equal(0);
+      expect(Object.keys(stringParam).length).to.equal(0);
+      expect(Object.keys(numberParam).length).to.equal(0);
+
+    });
+
   });
 
 };

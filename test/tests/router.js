@@ -87,6 +87,22 @@ module.exports = fxn => {
 
     });
 
+    it('Should parse body (string) from multipart/form-data', () => {
+
+      let qp = router.parseBody('?\r\nContent-Disposition: form-data; name="testkey"\r\n\r\ntestvalue\r\n?', {'content-type': 'multipart/form-data;boundary=?'});
+
+      expect(qp.testkey).to.equal('testvalue');
+
+    });
+
+    it('Should throw out body (string) from malformed multipart/form-data', () => {
+
+      let qp = router.parseBody('bad?multipart\r\nform\r\ndata', {'content-type': 'multipart/form-data;boundary=?'});
+
+      expect(Object.keys(qp).length).to.equal(0);
+
+    });
+
     it('Should prepare route matches properly', () => {
 
       let routeData = router.prepare('::1', '/abc/123', 'GET', {}, '');

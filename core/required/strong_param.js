@@ -15,6 +15,7 @@ module.exports = (function() {
     */
     constructor(props) {
 
+      props = props && typeof props === 'object' ? props : {};
       Object.keys(props).forEach(key => this[key] = props[key]);
 
     }
